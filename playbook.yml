@@ -1,0 +1,31 @@
+- hosts: server-utama
+  vars:
+  - image:  novelbad/apache-docker-ansible
+  tasks:
+    - name: install python-docker di ubuntu
+      apt:
+        name:
+          - python3
+          - python3-docker
+        state: present
+       when: ansible_distribution == "Ubuntu"
+     - name: install python-docker centos
+       yum:
+         name:
+           - python-docker
+         state: present
+        when: ansible_distribution == "CentOS"
+      - name: pull image docker
+        doker_image:
+          name: "{{ image }}"
+          state: present
+          force: yes
+       - name: create containers
+         docker_containers
+           name: docker-ansible
+           image: "{{ image }}"
+           state: started
+           published_port:
+           - 10000:80
+           recreate: yes
+   
