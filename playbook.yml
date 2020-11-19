@@ -1,6 +1,6 @@
 - hosts: server-utama
   vars:
-  - image:  novelbad/apache-docker-ansible
+  - image:  novel88/apache-docker-ansible
   tasks:
     - name: install python-docker di ubuntu
       apt:
